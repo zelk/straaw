@@ -105,6 +105,63 @@ namespace Straaw.Framework.Json
 
 		#region private
 
+		private static string CleanForJSON(string s)
+		{
+			if (s == null)
+			{
+				return null;
+			}
+			if (s == "")
+			{
+				return "";
+			}
+
+			var		c = '\0';
+			int		i;
+			int		len = s.Length;
+			var		sb	= new StringBuilder(len + 4);
+			string	t;
+
+			for (i = 0; i < len; i += 1) {
+				c = s[i];
+				switch (c) {
+					case '\\':
+					case '"':
+						sb.Append('\\');
+						sb.Append(c);
+						break;
+					case '/':
+						sb.Append('\\');
+						sb.Append(c);
+						break;
+					case '\b':
+						sb.Append("\\b");
+						break;
+					case '\t':
+						sb.Append("\\t");
+						break;
+					case '\n':
+						sb.Append("\\n");
+						break;
+					case '\f':
+						sb.Append("\\f");
+						break;
+					case '\r':
+						sb.Append("\\r");
+						break;
+					default:
+						if (c < ' ') {
+							t = "000" + String.Format("X", c);
+							sb.Append("\\u" + t.Substring(t.Length - 4));
+						} else {
+							sb.Append(c);
+						}
+						break;
+				}
+			}
+			return sb.ToString();
+		}
+
 		/// <summary>
 		/// Method is needed to mimic missing method in Mono version of System.Json.
 		/// </summary>
@@ -133,7 +190,7 @@ namespace Straaw.Framework.Json
 			else if (obj is DateTime)
 				jsonPrimitive = new JsonPrimitive(((DateTime)obj).ToUniversalTime().ToString("r"));
 			else if (obj is string)
-				jsonPrimitive = new JsonPrimitive((string)obj);
+				jsonPrimitive = new JsonPrimitive(CleanForJSON((string)obj));
 			else if (obj is Guid)
 				jsonPrimitive = new JsonPrimitive(obj.ToString());
 			else
