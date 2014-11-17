@@ -30,7 +30,7 @@ namespace Straaw.Framework.RestClient
 
 		public HttpRequestMessage RequestMessage { get; private set; }
 
-		public async Task<RestClientResponse> ExecuteAsync(byte[] requestBody = null, CacheMethod cacheMethod = CacheMethod.Default)
+		public async Task<RestClientResponse> ExecuteAsync(byte[] requestBody = null, CacheMethod cacheMethod = CacheMethod.PreferOnline)
 		{
 			if (RequestMessage.Method != HttpMethod.Get && cacheMethod != CacheMethod.Default)
 			{
@@ -119,7 +119,7 @@ namespace Straaw.Framework.RestClient
 			RequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Basic", encodedAuthString);
 		}
 
-		public async Task<RestClientResponse<TResult>> ExecuteAsync<TResult>(Encoding encoding, CacheMethod cacheMethod = CacheMethod.Default)
+		public async Task<RestClientResponse<TResult>> ExecuteAsync<TResult>(Encoding encoding, CacheMethod cacheMethod = CacheMethod.PreferOnline)
 			where TResult : IMutableModel, new()
 		{
 			if (encoding == null)
@@ -148,7 +148,7 @@ namespace Straaw.Framework.RestClient
 			_encoding = encoding;
 		}
 
-		public async Task<RestClientResponse<TResult>> ExecuteAsync<TResult>(TArgument argument, CacheMethod cacheMethod = CacheMethod.Default)
+		public async Task<RestClientResponse<TResult>> ExecuteAsync<TResult>(TArgument argument, CacheMethod cacheMethod = CacheMethod.PreferOnline)
 			where TResult : IMutableModel, new()
 		{
 			byte[] requestBytes = null;
@@ -163,7 +163,7 @@ namespace Straaw.Framework.RestClient
 			return new RestClientResponse<TResult>(restClientResponse, _encoding);
 		}
 
-		public async Task<RestClientResponse> ExecuteAsync(TArgument argument, CacheMethod cacheMethod = CacheMethod.Default)
+		public async Task<RestClientResponse> ExecuteAsync(TArgument argument, CacheMethod cacheMethod = CacheMethod.PreferOnline)
 		{
 			byte[] requestBytes = null;
 
