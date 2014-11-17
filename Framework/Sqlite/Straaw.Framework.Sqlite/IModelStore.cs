@@ -1,5 +1,5 @@
-﻿#if !MONOTOUCH && !__ANDROID__
-
+﻿using System;
+#if !MONOTOUCH && !__ANDROID__
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -21,9 +21,13 @@ namespace Straaw.Framework.Sqlite
 		/// <returns>An instance of TJsonDataContract.</returns>
 		TJsonDataContract GetModel<TJsonDataContract>(string key) where TJsonDataContract : class, new();
 		IDictionary<string, TJsonDataContract> GetAllModels<TJsonDataContract>() where TJsonDataContract : class, new();
+		Task<IDictionary<string, TJsonDataContract>> GetAllModelsAsync<TJsonDataContract>() where TJsonDataContract : class, new();
+		IList<TJsonDataContract> FilterModels<TJsonDataContract>(Func<TJsonDataContract, bool> filter) where TJsonDataContract : class, new();
 		Task<TJsonDataContract> GetModelAsync<TJsonDataContract>(string key) where TJsonDataContract : class, new();
 		void PutModel(string key, object jsonDataContract);
 		Task PutModelAsync(string key, object jsonDataContract);
+		void DeleteModel<TJsonDataContract>(string key);
+		Task DeleteModelAsync<TJsonDataContract>(string key);
 	}
 }
 
