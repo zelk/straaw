@@ -8,9 +8,13 @@ namespace Straaw.Framework.Model
 	public abstract class ImmutableModel<TImmutableModel, TMutableModel> : IImmutableModel
 		where TImmutableModel : ImmutableModel<TImmutableModel, TMutableModel>
 		where TMutableModel : MutableModel<TImmutableModel, TMutableModel>
-	{		public abstract TMutableModel ToMutable();
+	{
+		public abstract TMutableModel ToMutable();
 
-		public IMutableModel ToIMutableModel()		{			return ToMutable();		}
+		public IMutableModel ToIMutableModel()
+		{
+			return ToMutable();
+		}
 
 		public Type ImmutableModelType()
 		{
@@ -39,6 +43,11 @@ namespace Straaw.Framework.Model
 
 		protected IImmutableDictionary<string, T> ModelCopy<T>(IDictionary<string, T> dictionary)
 		{
+			if (dictionary == null)
+			{
+				return new Dictionary<string, T>().ToImmutableDictionary();
+			}
+
 			return dictionary.ToImmutableDictionary();
 		}
 
@@ -52,7 +61,11 @@ namespace Straaw.Framework.Model
 			ModelCopy<TOtherImmutableModel, TOtherMutableModel>
 			(TOtherMutableModel mutableModel)
 			where TOtherImmutableModel : ImmutableModel<TOtherImmutableModel, TOtherMutableModel>
-			where TOtherMutableModel : MutableModel<TOtherImmutableModel, TOtherMutableModel>		{			return mutableModel == null ? null : mutableModel.ToImmutable();		}
+			where TOtherMutableModel : MutableModel<TOtherImmutableModel, TOtherMutableModel>
+		{
+			return mutableModel == null ? null : mutableModel.ToImmutable();
+		}
+
 		protected ReadOnlyCollection<TOtherImmutableModel>
 			ModelCopy<TOtherImmutableModel, TOtherMutableModel>
 			(List<TOtherMutableModel> mutableList)

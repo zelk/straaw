@@ -15,7 +15,10 @@ namespace Straaw.Framework.Model
 	{
 		public abstract TImmutableModel ToImmutable();
 
-		public IImmutableModel ToIImmutableModel()		{			return ToImmutable();		}
+		public IImmutableModel ToIImmutableModel()
+		{
+			return ToImmutable();
+		}
 
 		public Type ImmutableModelType()
 		{
@@ -41,11 +44,22 @@ namespace Straaw.Framework.Model
 		{
 			return p;
 		}
-		protected IDictionary<string, T> ModelCopy<T>(IImmutableDictionary<string, T> dictionary)
+
+		protected IDictionary<string, T> ModelCopy<T>(IImmutableDictionary<string, T> dictionary)
 		{
+			if (dictionary == null)
+			{
+				return new Dictionary<string, T>();
+			}
+
 			return dictionary.ToDictionary(r => r.Key, r => r.Value);
 		}
-		protected List<T> ModelCopy<T>(ReadOnlyCollection<T> immutableList)		{			return immutableList == null ? new List<T>() : new List<T>(immutableList);		}
+
+		protected List<T> ModelCopy<T>(ReadOnlyCollection<T> immutableList)
+		{
+			return immutableList == null ? new List<T>() : new List<T>(immutableList);
+		}
+
 		protected
 			TOtherMutableModel
 			ModelCopy<TOtherImmutableModel, TOtherMutableModel>
