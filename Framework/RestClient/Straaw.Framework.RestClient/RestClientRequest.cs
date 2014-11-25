@@ -38,7 +38,15 @@ namespace Straaw.Framework.RestClient
 			}
 
 			Log.Info("HTTP {0} {1} (CacheMethod={2})", RequestMessage.Method.ToString(), RequestMessage.RequestUri.ToString(), cacheMethod.ToString());
-			
+			if (requestBody == null)
+			{
+				Log.Verbose("HTTP Body: null");
+			}
+			else
+			{
+				Log.Verbose("HTTP Body: {0}", Encoding.UTF8.GetString(requestBody, 0, requestBody.Length));
+			}
+
 			byte[] responseBody = null;
 			HttpResponseMessage httpResponseMessage = null;
 			

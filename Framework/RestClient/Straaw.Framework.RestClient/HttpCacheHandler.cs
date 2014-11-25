@@ -80,9 +80,12 @@ namespace Straaw.Framework.RestClient
 				{
 					response = new HttpResponseMessage();
 					response.StatusCode = HttpStatusCode.OK;
-					response.Content = new ByteArrayContent(cachedBody);
-					
-					return response;
+					if (cachedBody != null)
+					{
+						response.Content = new ByteArrayContent(cachedBody);
+					}
+
+				return response;
 				}
 				else
 				{
