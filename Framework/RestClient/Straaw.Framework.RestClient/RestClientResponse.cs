@@ -6,18 +6,6 @@ using System;
 using System.Net.Http;
 using System.Text;
 
-public static class ClassExtensions
-{
-	public static bool IsDefault<TValue>(this TValue self)
-	{
-		if (ReferenceEquals(self, null))
-		{
-			return true;
-		}
-		return self.Equals(default(TValue));
-	}
-}
-
 namespace Straaw.Framework.RestClient
 {
 	public abstract class RestClientResponseBase

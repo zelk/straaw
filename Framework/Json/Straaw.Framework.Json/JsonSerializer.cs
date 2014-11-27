@@ -80,10 +80,22 @@ namespace Straaw.Framework.Json
 			return (TDataContract)DeserializeDataContract(typeof(TDataContract), jsonString, encloseInDataContractName);
 		}
 
+		public static bool TryDeserializeDataContract<TDataContract>(string jsonString, out TDataContract dataContract, bool encloseInDataContractName = false) where TDataContract : new()
+		{
+			dataContract = DeserializeDataContract<TDataContract>(jsonString, encloseInDataContractName);
+			return dataContract.IsDefault();
+		}
+
 		public static TDataContract DeserializeDataContract<TDataContract>(Stream jsonStream, Encoding encoding, bool encloseInDataContractName = false) where TDataContract : new()
 		{
 			string jsonString = new StreamReader(jsonStream).ReadToEnd();
 			return (TDataContract)DeserializeDataContract(typeof(TDataContract), jsonString, encloseInDataContractName);
+		}
+
+		public static bool TryDeserializeDataContract<TDataContract>(Stream jsonStream, Encoding encoding, out TDataContract dataContract, bool encloseInDataContractName = false) where TDataContract : new()
+		{
+			dataContract = DeserializeDataContract<TDataContract>(jsonStream, encoding, encloseInDataContractName);
+			return dataContract.IsDefault();
 		}
 
 		public static object DeserializeDataContract(Type dataContractType, string jsonString, bool encloseInDataContractName = false)
