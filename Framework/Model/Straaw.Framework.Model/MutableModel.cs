@@ -45,6 +45,13 @@ namespace Straaw.Framework.Model
 			return p;
 		}
 
+		public TValue[] ModelCopy<TValue>(TValue[] source) where TValue : struct
+		{
+			var copy = new TValue[source.Length];
+			Array.Copy(source, copy, source.Length);
+			return copy;
+		}
+
 		protected IDictionary<string, T> ModelCopy<T>(IImmutableDictionary<string, T> dictionary)
 		{
 			if (dictionary == null)
