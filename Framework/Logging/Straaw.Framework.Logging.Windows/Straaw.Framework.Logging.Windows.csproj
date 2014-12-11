@@ -1,19 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{21528843-9C88-437E-B2FC-16C80FE0624D}</ProjectGuid>
+    <ProjectGuid>{6C2613B5-C629-43C7-8913-BDF713BCA665}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Straaw.Framework.Json</RootNamespace>
-    <AssemblyName>Straaw.Framework.Json</AssemblyName>
+    <RootNamespace>Straaw.Framework.Logging.Windows</RootNamespace>
+    <AssemblyName>Straaw.Framework.Logging.Windows</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile78</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,27 +30,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="JsonSerializer.cs" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ConsoleLogWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\BclExtensions\Straaw.Framework.BclExtensions\Straaw.Framework.BclExtensions.csproj">
-      <Project>{78bd7c8e-31ce-48b0-9e08-f0d2ff685624}</Project>
-      <Name>Straaw.Framework.BclExtensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Logging\Straaw.Framework.Logging\Straaw.Framework.Logging.csproj">
-      <Project>{39E28C5C-93EB-4CC9-A30C-3D5095045D3C}</Project>
+    <ProjectReference Include="..\Straaw.Framework.Logging\Straaw.Framework.Logging.csproj">
+      <Project>{39e28c5c-93eb-4cc9-a30c-3d5095045d3c}</Project>
       <Name>Straaw.Framework.Logging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\System.Json\System.Json.csproj">
-      <Project>{91613714-4D38-4294-A7DE-DECDC2B86CE1}</Project>
-      <Name>System.Json</Name>
-    </ProjectReference>
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

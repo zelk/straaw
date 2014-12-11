@@ -39,13 +39,8 @@ namespace Straaw.Framework.Logging
 	// Look at log4j/log4net support for user session logging.	// Thread local stack of loggers or something...	// I might be optimizing if I change the LogLevel to be an enum.	// Garbage Collection might suffer less since I won't be changing	// any member references.	// Add thread locks so that I always write one fill line?	// I cannot have locks obviously as that would hurt performance	// too much but I guess that I could have some queue system or something.	// Add support for including and excluding timing scopes.	// Optimize by creating a LogEvent object and keep it around - one for each logger.	// But it would cause threading issues, no? I can't be sure that a logger is not	// used by several threads. So, that would mean that I would need a locking	// meachanism to reuse those LogEvent objects and that's not am optimization.	// I could have a pool of LogEvents to reuse.
 	public sealed class Logger
 	{
-		internal void Log(LogEvent logEvent)
-		{
-			if (_minimumLogLevel.Ordinal > logEvent.LogLevel.Ordinal)
-				return;
-
-			_logManager.Log(logEvent);
-		}
+		public Type LoggingType { get { return _loggingType; }}
+		public string LoggingTypeName { get { return _loggingTypeName; } }
 
 		public void Verbose
 		(
@@ -405,6 +400,14 @@ namespace Straaw.Framework.Logging
 			return new LoggerScope(this, logEvent);
 		}
 
+		internal void Log(LogEvent logEvent)
+		{
+			if (_minimumLogLevel.Ordinal > logEvent.LogLevel.Ordinal)
+				return;
+
+			_logManager.Log(logEvent);
+		}
+
 		static Logger()
 		{
 			Stopwatch = new Stopwatch();
@@ -423,9 +426,6 @@ namespace Straaw.Framework.Logging
 			_loggingTypeName = loggingType.Name;
 			_minimumLogLevel = LogLevel.None;
 		}
-
-		public Type LoggingType { get { return _loggingType; }}
-		internal string LoggingTypeName { get { return _loggingTypeName; } }
 
 		internal static readonly Stopwatch Stopwatch;
 		private const string UniqueString = "57f93633-b10e-454c-ab11-133168817a7b";

@@ -22,7 +22,9 @@ namespace Straaw.Framework.RestClient
 			}
 			_httpClient = httpClient;
 
-// FIXME: This is not what I wanted... I want to create a relative URL here... I think...
+			if (httpClient.BaseAddress.PathAndQuery.EndsWith("/") && resource.StartsWith("/"))
+				resource = resource.Remove(0, 1);
+
 			var uri = new Uri(httpClient.BaseAddress + resource);
 
 			RequestMessage = new HttpRequestMessage(method, uri);
@@ -38,7 +40,15 @@ namespace Straaw.Framework.RestClient
 			}
 
 			Log.Info("HTTP {0} {1} (CacheMethod={2})", RequestMessage.Method.ToString(), RequestMessage.RequestUri.ToString(), cacheMethod.ToString());
-			
+			if (requestBody == null)
+			{
+				Log.Verbose("HTTP Body: null");
+			}
+			else
+			{
+				Log.Verbose("HTTP Body: {0}", Encoding.UTF8.GetString(requestBody, 0, requestBody.Length));
+			}
+
 			byte[] responseBody = null;
 			HttpResponseMessage httpResponseMessage = null;
 			
@@ -101,11 +111,11 @@ namespace Straaw.Framework.RestClient
 
 			if (responseBody != null && responseBody.Length > 0)
 			{
-				Log.Info("HTTP Response body {0} bytes: {1}", responseBody.Length, Encoding.UTF8.GetString(responseBody, 0, responseBody.Length));
+				Log.Verbose("HTTP Response body {0} bytes: {1}", responseBody.Length, Encoding.UTF8.GetString(responseBody, 0, responseBody.Length));
 			}
 			else
 			{
-				Log.Info("HTTP Response body 0 bytes");
+				Log.Verbose("HTTP Response body 0 bytes");
 			}
 
 			return new RestClientResponse(httpResponseMessage, responseBody);
