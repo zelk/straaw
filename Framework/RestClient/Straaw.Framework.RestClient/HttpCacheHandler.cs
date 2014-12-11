@@ -32,7 +32,14 @@ namespace Straaw.Framework.RestClient
 			if (request.Method == HttpMethod.Get && !requestCacheControl.NoCache)
 			{
 				cachedBody = _httpCacheStore.Read(uriString);
-				Log.Debug("Did read {0} bytes from cache.", cachedBody == null ? 0 : cachedBody.Length);
+				if (cachedBody != null)
+				{
+					Log.Debug("Did read {0} bytes from cache.", cachedBody.Length);
+				}
+				else
+				{
+					Log.Verbose("Found nothing in the http cache.");
+				}
 			}
 
 			if (cachedBody != null)
@@ -63,8 +70,7 @@ namespace Straaw.Framework.RestClient
 				CacheControlHeaderValue responseCacheControl = response.Headers.CacheControl;
 				Log.Verbose("Finished online request");
 	
-	// TODO: Remove the commented out stuff here as soon as the server stops sending NoCache!!!
-				if (/*!responseCacheControl.NoCache &&*/ request.Method == HttpMethod.Get)
+				if (!(responseCacheControl != null && responseCacheControl.NoCache) && request.Method == HttpMethod.Get)
 				{
 					_httpCacheStore.Write(uriString, onlineResponseBody);
 					Log.Debug("Did store {0} bytes in the cache.", onlineResponseBody == null ? 0 : onlineResponseBody.Length);
@@ -74,26 +80,20 @@ namespace Straaw.Framework.RestClient
 					Log.Debug("Skipping storing data in the cache, since the server specifically requests that nothing must be cached.");
 				}
 			}
-			catch(Exception)
+			catch(Exception e)
 			{
-				if (!requestCacheControl.NoCache)
+				if (!requestCacheControl.NoCache && cachedBody != null)
 				{
+					Log.Warning("Online request failed but returning cached version. {0}", e);
+
 					response = new HttpResponseMessage();
 					response.StatusCode = HttpStatusCode.OK;
-					if (cachedBody != null)
-					{
-						response.Content = new ByteArrayContent(cachedBody);
-					}
+					response.Content = new ByteArrayContent(cachedBody);
 
-				return response;
-				}
-				else
-				{
-					response = new HttpResponseMessage();
-					response.StatusCode = HttpStatusCode.GatewayTimeout;
-	
 					return response;
 				}
+
+				throw;
 			}
 			
 			return response;
