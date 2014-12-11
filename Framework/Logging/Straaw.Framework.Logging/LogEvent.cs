@@ -4,7 +4,7 @@ namespace Straaw.Framework.Logging
 {
 	public class LogEvent
 	{
-		internal LogEvent(long timeStamp, Logger logger, Type loggingType, string memberName, string fileName, int lineNumber, LogLevel logLevel, string appName, string formatString, params object[] args)
+		public LogEvent(long timeStamp, Logger logger, Type loggingType, string memberName, string fileName, int lineNumber, LogLevel logLevel, string appName, string formatString, params object[] args)
 		{
 			TimeStamp = timeStamp;
 			ScopeTime = null;

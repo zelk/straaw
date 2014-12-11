@@ -5,7 +5,7 @@ namespace Straaw.Framework.Logging.Windows
 {
 	public class ConsoleLogWriter : LogWriter
 	{
-		public ConsoleLogWriter(LogManager logManager) : base(logManager)
+		public ConsoleLogWriter(LogManager logManager, Func<LogEvent, string> logFormatter = null) : base(logManager, logFormatter)
 		{
 		}
 
