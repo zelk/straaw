@@ -36,6 +36,7 @@ namespace System.Json
             get { return map.Count; }
         }
 
+
         public IEnumerator<JsonPair> GetEnumerator()
         {
             return map.GetEnumerator();

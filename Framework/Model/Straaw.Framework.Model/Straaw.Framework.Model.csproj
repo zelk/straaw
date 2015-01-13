@@ -37,6 +37,7 @@
     <Compile Include="ImmutableModel.cs" />
     <Compile Include="IImmutableModel.cs" />
     <Compile Include="IModel.cs" />
+    <Compile Include="ModelBase.cs" />
     <Compile Include="MutableModelList.cs" />
     <Compile Include="MutableModel.cs" />
     <Compile Include="IMutableModel.cs" />

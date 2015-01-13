@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace Straaw.Framework.Model
 {
-	public abstract class ImmutableModel<TImmutableModel, TMutableModel> : IImmutableModel
+	public abstract class ImmutableModel<TImmutableModel, TMutableModel> : ModelBase, IImmutableModel
 		where TImmutableModel : ImmutableModel<TImmutableModel, TMutableModel>
 		where TMutableModel : MutableModel<TImmutableModel, TMutableModel>
 	{
@@ -26,28 +26,6 @@ namespace Straaw.Framework.Model
 			return typeof(TMutableModel);
 		}
 
-		protected string ModelCopy(string s)
-		{
-			return s;
-		}
-
-		protected TStruct ModelCopy<TStruct>(TStruct s) where TStruct : struct
-		{
-			return s;
-		}
-
-		protected TStruct? ModelCopy<TStruct>(TStruct? p) where TStruct : struct
-		{
-			return p;
-		}
-
-		public TValue[] ModelCopy<TValue>(TValue[] source) where TValue : struct
-		{
-			var copy = new TValue[source.Length];
-			Array.Copy(source, copy, source.Length);
-			return copy;
-		}
-
 		protected IImmutableDictionary<string, T> ModelCopy<T>(IDictionary<string, T> dictionary)
 		{
 			if (dictionary == null)
@@ -63,19 +41,14 @@ namespace Straaw.Framework.Model
 			return mutableList == null ? new ReadOnlyCollection<T>(new List<T>()) : new ReadOnlyCollection<T>(new List<T>(mutableList));
 		}
 
-		protected
-			TOtherImmutableModel
-			ModelCopy<TOtherImmutableModel, TOtherMutableModel>
-			(TOtherMutableModel mutableModel)
+		protected TOtherImmutableModel ModelCopy<TOtherImmutableModel, TOtherMutableModel> (TOtherMutableModel mutableModel)
 			where TOtherImmutableModel : ImmutableModel<TOtherImmutableModel, TOtherMutableModel>
 			where TOtherMutableModel : MutableModel<TOtherImmutableModel, TOtherMutableModel>
 		{
 			return mutableModel == null ? null : mutableModel.ToImmutable();
 		}
 
-		protected ReadOnlyCollection<TOtherImmutableModel>
-			ModelCopy<TOtherImmutableModel, TOtherMutableModel>
-			(List<TOtherMutableModel> mutableList)
+		protected ReadOnlyCollection<TOtherImmutableModel> ModelCopy<TOtherImmutableModel, TOtherMutableModel>(List<TOtherMutableModel> mutableList)
 			where TOtherImmutableModel : ImmutableModel<TOtherImmutableModel, TOtherMutableModel>
 			where TOtherMutableModel : MutableModel<TOtherImmutableModel, TOtherMutableModel>
 		{

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Straaw.Framework.Model
 {
@@ -18,12 +15,15 @@ namespace Straaw.Framework.Model
 		{
 		}
 
-		public ImmutableModelList(IEnumerable<TImmutableModel> list)
-			: base(list.ToList())
-		{
-		}
+        public ImmutableModelList(IEnumerable<TImmutableModel> models)
+            : this(new MutableModelList<TImmutableModel, TMutableModel>(models))
+        {
+        }
 
-		public IMutableModel ToIMutableModel()		{			return ToMutable();		}
+		public IMutableModel ToIMutableModel()
+		{
+			return ToMutable();
+		}
 
 		public Type ImmutableModelType()
 		{
