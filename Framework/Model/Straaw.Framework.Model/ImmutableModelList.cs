@@ -18,6 +18,11 @@ namespace Straaw.Framework.Model
 		{
 		}
 
+		public ImmutableModelList(IEnumerable<TImmutableModel> list)
+			: base(list.ToList())
+		{
+		}
+
 		public IMutableModel ToIMutableModel()		{			return ToMutable();		}
 
 		public Type ImmutableModelType()
