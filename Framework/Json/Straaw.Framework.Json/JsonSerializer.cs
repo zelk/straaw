@@ -205,6 +205,8 @@ namespace Straaw.Framework.Json
 				jsonPrimitive = new JsonPrimitive(CleanForJSON((string)obj));
 			else if (obj is Guid)
 				jsonPrimitive = new JsonPrimitive(obj.ToString());
+			else if (obj is Enum)
+				jsonPrimitive = new JsonPrimitive(obj.ToString());
 			else
 			{
 				jsonPrimitive = null;
@@ -366,10 +368,12 @@ namespace Straaw.Framework.Json
 								
 							if (jsonValueItem is JsonObject)
 							{
+								Log.Verbose("Found array, calling DeserializeDataContract.");
 								list.Add(DeserializeDataContract(jsonValueItem, type));
 							}
 							else
 							{
+								Log.Verbose("Found array, recursively calling myself (FromJsonValue).");
 								list.Add(FromJsonValue(jsonValueItem, type));
 							}
 						}
@@ -399,6 +403,7 @@ namespace Straaw.Framework.Json
 						var keys = jsonObject.Keys;
 						foreach (var key in keys)
 						{
+							Log.Verbose("Found object, recursively calling myself (FromJsonValue).");
 							var value = (string)FromJsonValue(jsonObject[key], typeof(string));
 							dictionary.Add(key, value);
 						}

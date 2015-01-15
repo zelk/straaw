@@ -1,1 +1,0 @@
-﻿namespace Straaw.Framework.Application{	public interface IDirectorRegistry	{		void AddDirector(DirectorBaseBase director);		void RemoveDirector(DirectorBaseBase director);	}}

@@ -36,15 +36,8 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DefaultRegistry.cs" />
-    <Compile Include="DirectorBase.cs" />
-    <Compile Include="DirectorFactoryBase.cs" />
-    <Compile Include="DirectorState.cs" />
-    <Compile Include="DirectorWebView.cs" />
-    <Compile Include="IDirectorRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MemoryHttpCacheStore.cs" />
-    <Compile Include="SqliteHttpCacheStore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -58,14 +51,6 @@
     <ProjectReference Include="..\..\Logging\Straaw.Framework.Logging\Straaw.Framework.Logging.csproj">
       <Project>{39E28C5C-93EB-4CC9-A30C-3D5095045D3C}</Project>
       <Name>Straaw.Framework.Logging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\UiContract\Straaw.Framework.UiContract\Straaw.Framework.UiContract.csproj">
-      <Project>{DD6B1FB0-2B13-4045-9D2A-1C45B50EB3D3}</Project>
-      <Name>Straaw.Framework.UiContract</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Sqlite\Straaw.Framework.Sqlite\Straaw.Framework.Sqlite.csproj">
-      <Project>{057818D1-6668-456E-BA2F-C63B7D935864}</Project>
-      <Name>Straaw.Framework.Sqlite</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\RestClient\Straaw.Framework.RestClient\Straaw.Framework.RestClient.csproj">
       <Project>{B8EC85FE-3BC8-4F70-9ABF-589D90EEBBE2}</Project>

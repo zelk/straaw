@@ -1,6 +1,5 @@
 using System;
 using Straaw.Framework.RestClient;
-using Straaw.Framework.Sqlite;
 using System.Collections.Generic;
 
 namespace Straaw.Framework.Application
