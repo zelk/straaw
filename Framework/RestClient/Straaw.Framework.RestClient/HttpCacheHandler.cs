@@ -75,7 +75,7 @@ namespace Straaw.Framework.RestClient
 					_httpCacheStore.Write(uriString, onlineResponseBody);
 					Log.Debug("Did store {0} bytes in the cache.", onlineResponseBody == null ? 0 : onlineResponseBody.Length);
 				}
-				else if (responseCacheControl.NoCache)
+				else if (responseCacheControl != null && responseCacheControl.NoCache)
 				{
 					Log.Debug("Skipping storing data in the cache, since the server specifically requests that nothing must be cached.");
 				}
