@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Straaw.Framework.Model
 {
@@ -41,7 +37,10 @@ namespace Straaw.Framework.Model
 			}
 		}
 
-		public IImmutableModel ToIImmutableModel()		{			return ToImmutable();		}
+		public IImmutableModel ToIImmutableModel()
+		{
+			return ToImmutable();
+		}
 
 		public Type ImmutableModelType()
 		{

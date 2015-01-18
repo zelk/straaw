@@ -8,8 +8,8 @@ namespace Straaw.Framework.Model
 {
 // TODO: Try to find a way to move the implementation of ToMutable() and ToImmutable() to the base classes.
 // TODO: Maybe: Try to find a way to implement the constructors in the base classes, using reflection to copy the data (less fast, less control in implementation but simpler data model classes).
-
-	public abstract class MutableModel<TImmutableModel, TMutableModel> : IMutableModel
+    
+	public abstract class MutableModel<TImmutableModel, TMutableModel> : ModelBase, IMutableModel
 		where TImmutableModel : ImmutableModel<TImmutableModel, TMutableModel>
 		where TMutableModel : MutableModel<TImmutableModel, TMutableModel>
 	{
@@ -30,29 +30,7 @@ namespace Straaw.Framework.Model
 			return typeof(TMutableModel);
 		}
 
-		protected string ModelCopy(string s)
-		{
-			return s;
-		}
-
-		protected TStruct ModelCopy<TStruct>(TStruct s) where TStruct : struct
-		{
-			return s;
-		}
-
-		protected TStruct? ModelCopy<TStruct>(TStruct? p) where TStruct : struct
-		{
-			return p;
-		}
-
-		public TValue[] ModelCopy<TValue>(TValue[] source) where TValue : struct
-		{
-			var copy = new TValue[source.Length];
-			Array.Copy(source, copy, source.Length);
-			return copy;
-		}
-
-		protected IDictionary<string, T> ModelCopy<T>(IImmutableDictionary<string, T> dictionary)
+        protected IDictionary<string, T> ModelCopy<T>(IImmutableDictionary<string, T> dictionary)
 		{
 			if (dictionary == null)
 			{
@@ -67,10 +45,7 @@ namespace Straaw.Framework.Model
 			return immutableList == null ? new List<T>() : new List<T>(immutableList);
 		}
 
-		protected
-			TOtherMutableModel
-			ModelCopy<TOtherImmutableModel, TOtherMutableModel>
-			(TOtherImmutableModel immutableModel)
+		protected TOtherMutableModel ModelCopy<TOtherImmutableModel, TOtherMutableModel> (TOtherImmutableModel immutableModel)
 			where TOtherImmutableModel : ImmutableModel<TOtherImmutableModel, TOtherMutableModel>
 			where TOtherMutableModel : MutableModel<TOtherImmutableModel, TOtherMutableModel>
 		{
@@ -80,9 +55,7 @@ namespace Straaw.Framework.Model
 			return immutableModel.ToMutable();
 		}
 
-		protected List<TOtherMutableModel>
-			ModelCopy<TOtherImmutableModel, TOtherMutableModel>
-			(ReadOnlyCollection<TOtherImmutableModel> immutableList)
+		protected List<TOtherMutableModel> ModelCopy<TOtherImmutableModel, TOtherMutableModel>(ReadOnlyCollection<TOtherImmutableModel> immutableList)
 			where TOtherImmutableModel : ImmutableModel<TOtherImmutableModel, TOtherMutableModel>
 			where TOtherMutableModel : MutableModel<TOtherImmutableModel, TOtherMutableModel>
 		{
@@ -92,8 +65,8 @@ namespace Straaw.Framework.Model
 			var mutableList = new List<TOtherMutableModel>(immutableList.Count);
 			foreach (TOtherImmutableModel immutableModel in immutableList)
 				mutableList.Add(immutableModel.ToMutable());
+
 			return mutableList;
 		}
-
 	}
 }
