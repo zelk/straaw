@@ -10,6 +10,11 @@ namespace Straaw.Framework.Model
 		where TImmutableModel : IImmutableModel
 		where TMutableModel : IMutableModel
 	{
+        static ImmutableModelList()
+        {
+            Empty = new ImmutableModelList<TImmutableModel, TMutableModel>(new TImmutableModel[0]);
+        }
+
 		public ImmutableModelList(MutableModelList<TImmutableModel, TMutableModel> list)
 			: base(CopyList(list))
 		{
@@ -40,6 +45,7 @@ namespace Straaw.Framework.Model
 			return new MutableModelList<TImmutableModel, TMutableModel>(this);
 		}
 
+        public static ImmutableModelList<TImmutableModel, TMutableModel> Empty { get; private set; }
 
 		// PRIVATE
 		/////////////////////////////////////////////////////////////////////////////////////////////////
