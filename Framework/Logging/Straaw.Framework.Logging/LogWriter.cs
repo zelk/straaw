@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Straaw.Framework.Logging
 {
-	public abstract class LogWriter
+	public abstract class LogWriter : IDisposable
 	{
 		protected LogWriter(LogManager logManager, Func<LogEvent, string> logFormatter = null)
 		{
@@ -184,5 +184,7 @@ namespace Straaw.Framework.Logging
 		private readonly Dictionary <Type, LogLevel> _logLevelsPerType;
 		private readonly Dictionary <Logger, LogLevel> _loggerLogLevelCache;
 		private readonly Func<LogEvent, string> _logFormatter;
+
+		public abstract void Dispose();
 	}
 }

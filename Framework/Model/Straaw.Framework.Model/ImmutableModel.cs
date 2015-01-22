@@ -26,6 +26,13 @@ namespace Straaw.Framework.Model
 			return typeof(TMutableModel);
 		}
 
+        public TImmutableModel Modify(Action<TMutableModel> modify)
+        {
+            var mutable = ToMutable();
+            modify(mutable);
+            return mutable.ToImmutable();
+        }
+
 		protected IImmutableDictionary<string, T> ModelCopy<T>(IDictionary<string, T> dictionary)
 		{
 			if (dictionary == null)

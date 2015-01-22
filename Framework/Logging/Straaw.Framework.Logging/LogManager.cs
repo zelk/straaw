@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Straaw.Framework.Logging
 {
-	public sealed class LogManager
+	public sealed class LogManager : IDisposable
 	{
 		public LogManager(string appName)
 		{
@@ -172,6 +172,14 @@ namespace Straaw.Framework.Logging
 					}
 				}
 				logWriters.Add(logWriter);
+			}
+		}
+
+		public void Dispose()
+		{
+			foreach (LogWriter logWriter in _logWriters)
+			{
+				logWriter.Dispose();
 			}
 		}
 

@@ -14,5 +14,8 @@ namespace Straaw.Framework.Logging.Windows
 			Console.WriteLine(textLine);
 		}
 
+		public override void Dispose()
+		{
+		}
 	}
 }
