@@ -1,7 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Threading;
-using Straaw.Framework.Logging;
 
 namespace Straaw.Framework.Logging.Windows
 {
@@ -9,13 +7,20 @@ namespace Straaw.Framework.Logging.Windows
 	{
 		public SlowBlockingThreadSafeFileLogWriter(string logFilePath, LogManager logManager, Func<LogEvent, string> logFormatter = null) : base(logManager, logFormatter)
 		{
-			if (!File.Exists(logFilePath))
+		    var fileInfo = new FileInfo(logFilePath);
+
+			if (!fileInfo.Exists)
 			{
-				_streamWriter = File.CreateText(logFilePath);
+			    if (!fileInfo.Directory.Exists)
+			    {
+			        fileInfo.Directory.Create();
+			    }
+
+			    _streamWriter = fileInfo.CreateText();
 			}
 			else
 			{
-				_streamWriter = File.AppendText(logFilePath);
+			    _streamWriter = fileInfo.AppendText();
 			}	
 
 		}
