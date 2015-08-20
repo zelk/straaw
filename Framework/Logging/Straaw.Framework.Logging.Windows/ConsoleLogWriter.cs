@@ -11,7 +11,15 @@ namespace Straaw.Framework.Logging.Windows
 
 		protected override void WriteLine(string textLine, LogEvent logEvent)
 		{
+		    var fgColor = Console.ForegroundColor;
+
+		    if(logEvent.LogLevel.Ordinal >= 4)
+                Console.ForegroundColor = ConsoleColor.Red;
+            else if (logEvent.LogLevel.Ordinal >= 3)
+                Console.ForegroundColor = ConsoleColor.Yellow;
+
 			Console.WriteLine(textLine);
+		    Console.ForegroundColor = fgColor;
 		}
 
 		public override void Dispose()
